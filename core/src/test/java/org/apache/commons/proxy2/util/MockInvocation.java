@@ -16,6 +16,9 @@
  */
 package org.apache.commons.proxy2.util;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.lang.reflect.Method;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -23,52 +26,41 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.proxy2.Invocation;
 import org.apache.commons.proxy2.ProxyUtils;
 
-public class MockInvocation implements Invocation
-{
-    //----------------------------------------------------------------------------------------------------------------------
-    // Fields
-    //----------------------------------------------------------------------------------------------------------------------
+public class MockInvocation {
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Fields
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    private final Method method;
-    private final Object[] arguments;
-    private final Object returnValue;
+	public static Invocation mockInvocation1(Method method, Object returnValue, Object... arguments) {
+		Object[] mockFieldVariableArguments;
+		Object mockFieldVariableReturnValue;
+		Method mockFieldVariableMethod;
+		Invocation mockInstance = mock(Invocation.class);
+		mockFieldVariableReturnValue = returnValue;
+		mockFieldVariableArguments = ObjectUtils.defaultIfNull(ArrayUtils.clone(arguments), ProxyUtils.EMPTY_ARGUMENTS);
+		mockFieldVariableMethod = method;
+		try {
+			when(mockInstance.getArguments()).thenAnswer((stubInvo) -> {
+				return mockFieldVariableArguments;
+			});
+			when(mockInstance.proceed()).thenAnswer((stubInvo) -> {
+				return mockFieldVariableReturnValue;
+			});
+			when(mockInstance.getMethod()).thenAnswer((stubInvo) -> {
+				return mockFieldVariableMethod;
+			});
+		} catch (Throwable exception) {
+			exception.printStackTrace();
+		}
+		return mockInstance;
+	}
 
-    //----------------------------------------------------------------------------------------------------------------------
-    // Constructors
-    //----------------------------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Constructors
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    public MockInvocation(Method method, Object returnValue, Object... arguments)
-    {
-        this.returnValue = returnValue;
-        this.arguments = ObjectUtils.defaultIfNull(ArrayUtils.clone(arguments), ProxyUtils.EMPTY_ARGUMENTS);
-        this.method = method;
-    }
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Invocation Implementation
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    //----------------------------------------------------------------------------------------------------------------------
-    // Invocation Implementation
-    //----------------------------------------------------------------------------------------------------------------------
-
-    @Override
-    public Object[] getArguments()
-    {
-        return arguments;
-    }
-
-    @Override
-    public Method getMethod()
-    {
-        return method;
-    }
-
-    @Override
-    public Object getProxy()
-    {
-        return null;
-    }
-
-    @Override
-    public Object proceed() throws Throwable
-    {
-        return returnValue;
-    }
 }

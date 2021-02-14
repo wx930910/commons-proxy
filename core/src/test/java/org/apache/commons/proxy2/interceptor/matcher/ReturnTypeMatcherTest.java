@@ -30,36 +30,32 @@ import org.apache.commons.proxy2.util.Echo;
 import org.apache.commons.proxy2.util.MockInvocation;
 import org.junit.Test;
 
-public class ReturnTypeMatcherTest extends AbstractTestCase
-{
-    //----------------------------------------------------------------------------------------------------------------------
-    // Other Methods
-    //----------------------------------------------------------------------------------------------------------------------
+public class ReturnTypeMatcherTest extends AbstractTestCase {
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Other Methods
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    public void testExactMatchNonMatching() throws Throwable
-    {
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo");
-        InvocationMatcher matcher = new ReturnTypeMatcher(Serializable.class, true);
-        assertFalse(matcher.matches(invocation));
-    }
+	@Test
+	public void testExactMatchNonMatching() throws Throwable {
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo");
+		InvocationMatcher matcher = new ReturnTypeMatcher(Serializable.class, true);
+		assertFalse(matcher.matches(invocation));
+	}
 
-    @Test
-    public void testMatchVoid() throws Throwable
-    {
-        Method method = Echo.class.getMethod("echo");
-        Invocation invocation = new MockInvocation(method, null);
-        InvocationMatcher matcher = new ReturnTypeMatcher(Void.TYPE);
-        assertTrue(matcher.matches(invocation));
-    }
+	@Test
+	public void testMatchVoid() throws Throwable {
+		Method method = Echo.class.getMethod("echo");
+		Invocation invocation = MockInvocation.mockInvocation1(method, null);
+		InvocationMatcher matcher = new ReturnTypeMatcher(Void.TYPE);
+		assertTrue(matcher.matches(invocation));
+	}
 
-    @Test
-    public void testWithSupertypeMatch() throws Throwable
-    {
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo");
-        InvocationMatcher matcher = new ReturnTypeMatcher(Serializable.class);
-        assertTrue(matcher.matches(invocation));
-    }
+	@Test
+	public void testWithSupertypeMatch() throws Throwable {
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo");
+		InvocationMatcher matcher = new ReturnTypeMatcher(Serializable.class);
+		assertTrue(matcher.matches(invocation));
+	}
 }

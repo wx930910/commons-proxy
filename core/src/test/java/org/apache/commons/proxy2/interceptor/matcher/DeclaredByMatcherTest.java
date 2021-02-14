@@ -30,27 +30,24 @@ import org.apache.commons.proxy2.util.EchoImpl;
 import org.apache.commons.proxy2.util.MockInvocation;
 import org.junit.Test;
 
-public class DeclaredByMatcherTest extends AbstractTestCase
-{
-    //----------------------------------------------------------------------------------------------------------------------
-    // Other Methods
-    //----------------------------------------------------------------------------------------------------------------------
+public class DeclaredByMatcherTest extends AbstractTestCase {
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Other Methods
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    public void testExactMatchNonMatching() throws Throwable
-    {
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo");
-        InvocationMatcher matcher = new DeclaredByMatcher(EchoImpl.class, true);
-        assertFalse(matcher.matches(invocation));
-    }
+	@Test
+	public void testExactMatchNonMatching() throws Throwable {
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo");
+		InvocationMatcher matcher = new DeclaredByMatcher(EchoImpl.class, true);
+		assertFalse(matcher.matches(invocation));
+	}
 
-    @Test
-    public void testWithSupertypeMatch() throws Throwable
-    {
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo");
-        InvocationMatcher matcher = new DeclaredByMatcher(EchoImpl.class);
-        assertTrue(matcher.matches(invocation));
-    }
+	@Test
+	public void testWithSupertypeMatch() throws Throwable {
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo");
+		InvocationMatcher matcher = new DeclaredByMatcher(EchoImpl.class);
+		assertTrue(matcher.matches(invocation));
+	}
 }

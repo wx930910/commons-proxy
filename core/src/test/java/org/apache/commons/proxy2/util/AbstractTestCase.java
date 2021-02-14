@@ -27,57 +27,46 @@ import org.apache.commons.lang3.builder.Builder;
 import org.apache.commons.proxy2.Invocation;
 import org.apache.commons.proxy2.ProxyUtils;
 
-public abstract class AbstractTestCase
-{
-    //**********************************************************************************************************************
-    // Other Methods
-    //**********************************************************************************************************************
+public abstract class AbstractTestCase {
+	// **********************************************************************************************************************
+	// Other Methods
+	// **********************************************************************************************************************
 
-    protected void assertSerializable(Object o)
-    {
-        assertTrue(o instanceof Serializable);
-        SerializationUtils.clone((Serializable) o);
-    }
+	protected void assertSerializable(Object o) {
+		assertTrue(o instanceof Serializable);
+		SerializationUtils.clone((Serializable) o);
+	}
 
-    protected MockInvocationBuilder mockInvocation(Class<?> type, String name, Class<?>... argumentTypes)
-    {
-        try
-        {
-            return new MockInvocationBuilder(Validate.notNull(type).getMethod(name, argumentTypes));
-        }
-        catch (NoSuchMethodException e)
-        {
-            throw new IllegalArgumentException("Method not found.", e);
-        }
-    }
+	protected MockInvocationBuilder mockInvocation(Class<?> type, String name, Class<?>... argumentTypes) {
+		try {
+			return new MockInvocationBuilder(Validate.notNull(type).getMethod(name, argumentTypes));
+		} catch (NoSuchMethodException e) {
+			throw new IllegalArgumentException("Method not found.", e);
+		}
+	}
 
-    protected static final class MockInvocationBuilder implements Builder<Invocation>
-    {
-        private final Method method;
-        private Object[] arguments = ProxyUtils.EMPTY_ARGUMENTS;
-        private Object returnValue = null;
+	protected static final class MockInvocationBuilder implements Builder<Invocation> {
+		private final Method method;
+		private Object[] arguments = ProxyUtils.EMPTY_ARGUMENTS;
+		private Object returnValue = null;
 
-        public MockInvocationBuilder(Method method)
-        {
-            this.method = method;
-        }
+		public MockInvocationBuilder(Method method) {
+			this.method = method;
+		}
 
-        public MockInvocationBuilder withArguments(Object... arguments)
-        {
-            this.arguments = arguments;
-            return this;
-        }
+		public MockInvocationBuilder withArguments(Object... arguments) {
+			this.arguments = arguments;
+			return this;
+		}
 
-        public MockInvocationBuilder returning(Object value)
-        {
-            this.returnValue = value;
-            return this;
-        }
+		public MockInvocationBuilder returning(Object value) {
+			this.returnValue = value;
+			return this;
+		}
 
-        @Override
-        public Invocation build()
-        {
-            return new MockInvocation(method, returnValue, arguments);
-        }
-    }
+		@Override
+		public Invocation build() {
+			return MockInvocation.mockInvocation1(method, returnValue, arguments);
+		}
+	}
 }

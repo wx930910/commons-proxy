@@ -28,25 +28,22 @@ import org.apache.commons.proxy2.util.Echo;
 import org.apache.commons.proxy2.util.MockInvocation;
 import org.junit.Test;
 
-public class MethodNameMatcherTest extends AbstractTestCase
-{
-    //----------------------------------------------------------------------------------------------------------------------
-    // Other Methods
-    //----------------------------------------------------------------------------------------------------------------------
+public class MethodNameMatcherTest extends AbstractTestCase {
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Other Methods
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    public void testWithMatchingMethod() throws Exception
-    {
-        MethodNameMatcher matcher = new MethodNameMatcher("echo");
-        final Method method = Echo.class.getMethod("echo");
-        assertTrue(matcher.matches(new MockInvocation(method, null)));
-    }
+	@Test
+	public void testWithMatchingMethod() throws Exception {
+		MethodNameMatcher matcher = new MethodNameMatcher("echo");
+		final Method method = Echo.class.getMethod("echo");
+		assertTrue(matcher.matches(MockInvocation.mockInvocation1(method, null)));
+	}
 
-    @Test
-    public void testWithNonMatchingMethod() throws Exception
-    {
-        MethodNameMatcher matcher = new MethodNameMatcher("foo");
-        final Method method = Echo.class.getMethod("echo");
-        assertFalse(matcher.matches(new MockInvocation(method, null)));
-    }
+	@Test
+	public void testWithNonMatchingMethod() throws Exception {
+		MethodNameMatcher matcher = new MethodNameMatcher("foo");
+		final Method method = Echo.class.getMethod("echo");
+		assertFalse(matcher.matches(MockInvocation.mockInvocation1(method, null)));
+	}
 }

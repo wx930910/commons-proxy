@@ -17,39 +17,40 @@
 
 package org.apache.commons.proxy2.util;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.apache.commons.proxy2.Interceptor;
 import org.apache.commons.proxy2.Invocation;
 
 @SuppressWarnings("serial")
-public class SuffixInterceptor implements Interceptor
-{
-    //**********************************************************************************************************************
-    // Fields
-    //**********************************************************************************************************************
+public class SuffixInterceptor {
+	// **********************************************************************************************************************
+	// Fields
+	// **********************************************************************************************************************
 
-    private final String suffix;
+	public static Interceptor mockInterceptor1(String suffix) throws Throwable {
+		String mockFieldVariableSuffix;
+		Interceptor mockInstance = mock(Interceptor.class);
+		mockFieldVariableSuffix = suffix;
+		when(mockInstance.intercept(any(Invocation.class))).thenAnswer((stubInvo) -> {
+			Invocation methodInvocation = stubInvo.getArgument(0);
+			Object result = methodInvocation.proceed();
+			if (result instanceof String) {
+				result = ((String) result) + mockFieldVariableSuffix;
+			}
+			return result;
+		});
+		return mockInstance;
+	}
 
-    //**********************************************************************************************************************
-    // Constructors
-    //**********************************************************************************************************************
+	// **********************************************************************************************************************
+	// Constructors
+	// **********************************************************************************************************************
 
-    public SuffixInterceptor(String suffix)
-    {
-        this.suffix = suffix;
-    }
+	// **********************************************************************************************************************
+	// Interceptor Implementation
+	// **********************************************************************************************************************
 
-    //**********************************************************************************************************************
-    // Interceptor Implementation
-    //**********************************************************************************************************************
-
-    @Override
-    public Object intercept(Invocation methodInvocation) throws Throwable
-    {
-        Object result = methodInvocation.proceed();
-        if (result instanceof String)
-        {
-            result = ((String) result) + suffix;
-        }
-        return result;
-    }
 }

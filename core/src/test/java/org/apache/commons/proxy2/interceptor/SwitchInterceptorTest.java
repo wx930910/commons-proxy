@@ -29,49 +29,44 @@ import org.apache.commons.proxy2.util.Echo;
 import org.apache.commons.proxy2.util.MockInvocation;
 import org.junit.Test;
 
-public class SwitchInterceptorTest extends AbstractTestCase
-{
-    //----------------------------------------------------------------------------------------------------------------------
-    // Other Methods
-    //----------------------------------------------------------------------------------------------------------------------
+public class SwitchInterceptorTest extends AbstractTestCase {
+	// ----------------------------------------------------------------------------------------------------------------------
+	// Other Methods
+	// ----------------------------------------------------------------------------------------------------------------------
 
-    @Test
-    public void testWithMultipleAdvices() throws Throwable
-    {
-        SwitchInterceptor interceptor = new SwitchInterceptor();
-        interceptor.when(new MethodNameMatcher("echo")).then(constant("bar"));
-        interceptor.when(new MethodNameMatcher("echoBack")).then(constant("baz"));
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo", "foo");
-        assertEquals("baz", interceptor.intercept(invocation));
-    }
+	@Test
+	public void testWithMultipleAdvices() throws Throwable {
+		SwitchInterceptor interceptor = new SwitchInterceptor();
+		interceptor.when(new MethodNameMatcher("echo")).then(constant("bar"));
+		interceptor.when(new MethodNameMatcher("echoBack")).then(constant("baz"));
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo", "foo");
+		assertEquals("baz", interceptor.intercept(invocation));
+	}
 
-    @Test
-    public void testWithNoAdvice() throws Throwable
-    {
-        SwitchInterceptor interceptor = new SwitchInterceptor();
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo", "foo");
-        assertEquals("foo", interceptor.intercept(invocation));
-    }
+	@Test
+	public void testWithNoAdvice() throws Throwable {
+		SwitchInterceptor interceptor = new SwitchInterceptor();
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo", "foo");
+		assertEquals("foo", interceptor.intercept(invocation));
+	}
 
-    @Test
-    public void testWithSingleAdviceWhichDoesNotMatch() throws Throwable
-    {
-        SwitchInterceptor interceptor = new SwitchInterceptor().when(new MethodNameMatcher("echoBackZZZZ")).then(
-                constant("bar"));
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo", "foo");
-        assertEquals("foo", interceptor.intercept(invocation));
-    }
+	@Test
+	public void testWithSingleAdviceWhichDoesNotMatch() throws Throwable {
+		SwitchInterceptor interceptor = new SwitchInterceptor().when(new MethodNameMatcher("echoBackZZZZ"))
+				.then(constant("bar"));
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo", "foo");
+		assertEquals("foo", interceptor.intercept(invocation));
+	}
 
-    @Test
-    public void testWithSingleAdviceWhichMatches() throws Throwable
-    {
-        SwitchInterceptor interceptor = new SwitchInterceptor().when(new MethodNameMatcher("echoBack")).then(
-                constant("bar"));
-        Method method = Echo.class.getMethod("echoBack", String.class);
-        Invocation invocation = new MockInvocation(method, "foo", "foo");
-        assertEquals("bar", interceptor.intercept(invocation));
-    }
+	@Test
+	public void testWithSingleAdviceWhichMatches() throws Throwable {
+		SwitchInterceptor interceptor = new SwitchInterceptor().when(new MethodNameMatcher("echoBack"))
+				.then(constant("bar"));
+		Method method = Echo.class.getMethod("echoBack", String.class);
+		Invocation invocation = MockInvocation.mockInvocation1(method, "foo", "foo");
+		assertEquals("bar", interceptor.intercept(invocation));
+	}
 }
