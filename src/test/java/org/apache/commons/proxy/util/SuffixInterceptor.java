@@ -24,30 +24,26 @@ import org.apache.commons.proxy.Invocation;
  * @author James Carman
  * @since 1.0
  */
-public class SuffixInterceptor implements Interceptor
-{
+public class SuffixInterceptor implements Interceptor {
 //**********************************************************************************************************************
 // Fields
 //**********************************************************************************************************************
 
-    private final String suffix;
+	private final String suffix;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public SuffixInterceptor( String suffix )
-    {
-        this.suffix = suffix;
-    }
+	public SuffixInterceptor(String suffix) {
+		this.suffix = suffix;
+	}
 
 //**********************************************************************************************************************
 // Interceptor Implementation
 //**********************************************************************************************************************
 
-
-    public Object intercept( Invocation methodInvocation ) throws Throwable
-    {
-        return methodInvocation.proceed() + suffix;
-    }
+	public Object intercept(Invocation methodInvocation) throws Throwable {
+		return methodInvocation.proceed() + suffix;
+	}
 }
