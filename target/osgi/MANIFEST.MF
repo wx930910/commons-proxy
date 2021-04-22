@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Created-By: 12.0.2 (Oracle Corporation)
+Tool: Bnd-0.0.255
+Bnd-LastModified: 1618370207460
+Export-Package: org.apache.commons.proxy.factory.cglib;version="1.1.0.SN
+ APSHOT",org.apache.commons.proxy.provider.remoting;version="1.1.0.SNAPS
+ HOT",org.apache.commons.proxy.invoker;version="1.1.0.SNAPSHOT",org.apac
+ he.commons.proxy.provider;version="1.1.0.SNAPSHOT",org.apache.commons.p
+ roxy.interceptor;version="1.1.0.SNAPSHOT",org.apache.commons.proxy.inte
+ rceptor.logging;version="1.1.0.SNAPSHOT",org.apache.commons.proxy.facto
+ ry.javassist;version="1.1.0.SNAPSHOT",org.apache.commons.proxy.factory.
+ util;version="1.1.0.SNAPSHOT",org.apache.commons.proxy;version="1.1.0.S
+ NAPSHOT",org.apache.commons.proxy.interceptor.filter;version="1.1.0.SNA
+ PSHOT",org.apache.commons.proxy.exception;version="1.1.0.SNAPSHOT"
+Import-Package: EDU.oswego.cs.dl.util.concurrent,com.caucho.burlap.clien
+ t,com.caucho.hessian.client,javassist,javax.xml.namespace,javax.xml.rpc
+ ,net.sf.cglib.proxy,org.aopalliance.intercept,org.apache.commons.loggin
+ g,org.apache.xmlrpc,org.slf4j
+Bundle-Version: 1.1.0.SNAPSHOT
+Bundle-SymbolicName: org.apache.commons.proxy
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-DocURL: http://commons.apache.org/proper/commons-proxy/
+Bundle-Description: Java library for dynamic proxying
+Bundle-Vendor: The Apache Software Foundation
+Bundle-Name: Commons Proxy
+
